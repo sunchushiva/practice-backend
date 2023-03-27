@@ -4,6 +4,15 @@ const { NoteModel } = require("../models/model.notes");
 
 const noteRoute = express.Router();
 
+noteRoute.get("/get", async (req, res) => {
+  try {
+    const data = await NoteModel.find();
+    res.status(200).send(data);
+  } catch (err) {
+    res.status(400).send({ message: err.message });
+  }
+});
+
 noteRoute.get("/", authmiddleware, async (req, res) => {
   const user = req.body.user;
   try {
